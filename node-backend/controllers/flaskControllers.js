@@ -36,7 +36,7 @@ const postPlantDiseasesAndFertilizersData = asyncHandler(async (req, res) => {
     //const res = axios POST request to flask backend
 });
 
-urlp = 'http://8520-2409-40c0-33-4a67-c0ef-901e-cf73-d043.ngrok-free.app/crop_prediction'
+urlp = 'https://7e42-2405-204-228-d152-4d89-2f8b-a9e6-5785.ngrok-free.app/recv'
 
 // @desc   send dht sensor data input to flask ML backend and get back ML output/predictions as response
 // @route   POST /api/plant-disease
@@ -44,17 +44,17 @@ urlp = 'http://8520-2409-40c0-33-4a67-c0ef-901e-cf73-d043.ngrok-free.app/crop_pr
 const postIdealCropData = asyncHandler(async (req, res) => {
     console.log(req.body);
     if (req.body) {
-        let data = new SensorData(req.body)
+        let data = await SensorData.create({ temperature: req.body.temperature, humidity: req.body.humidity })
         await data.save()
         // console.log(temperature, humidity, gas, moisture, rain);
         // mqttClient.sendMessage(req.body.temperature);
         let data2 = {
-            temp: req.body.Temperature,
-            humid: req.body.Humidity,
+            temp: req.body.temperature,
+            humid: req.body.humidity,
             rainfall: 100
         }
-        const response = await axios.post(urlp, data2)
-        res.send(response.data.prediction[0]);
+        // const response = await axios.post(urlp, data2)
+        // res.send(response.data.prediction[0]);
     }
     else {
         throw new Error("Please provide all fields!");
@@ -64,8 +64,23 @@ const postIdealCropData = asyncHandler(async (req, res) => {
 
 const getCropData = asyncHandler(async (req, res) => {
     const last12Records = await SensorData.find().sort({ $natural: -1 }).limit(12);
-    res.status(200).send(last12Records)
+    temperature = []
+    humidity = []
+    gas = []
+    rain = []
+    soil_moisture = []
 
+    last12Records.map((obj) => temperature.push(obj.Temperature))
+    last12Records.map((obj) => humidity.push(obj.Humidity))
+    last12Records.map((obj) => gas.push(obj.gasData))
+    last12Records.map((obj) => soil_moisture.push(obj.SoilMoisture))
+    last12Records.map((obj) => rain.push(obj.Rain))
+
+    console.log(temperature)
+    console.log(humidity)
+    console.log(gas)
+    console.log(rain)
+    console.log(soil_moisture)
 })
 
 module.exports = {

@@ -1,24 +1,24 @@
 const mongoose = require('mongoose')
 
 const SensorDataSchema = mongoose.Schema({
-        gasData: {
-            type: Number
-        },
-        Temperature: {
-            type: Number
-        },
-        Humidity: {
-            type: Number
-        },
-        SoilMoisture: {
-            type: Number
-        },
-        Rain: {
-            type: Number
-        },
-    }, 
-    { 
-        timestamps: true 
+    gasData: {
+        type: Number
+    },
+    temperature: {
+        type: Number
+    },
+    humidity: {
+        type: Number
+    },
+    SoilMoisture: {
+        type: Number
+    },
+    Rain: {
+        type: Number
+    },
+},
+    {
+        timestamps: true
     }
 );
 
