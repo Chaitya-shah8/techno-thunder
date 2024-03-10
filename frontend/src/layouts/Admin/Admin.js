@@ -89,7 +89,7 @@ function Admin(props) {
               routes={routes}
               logo={{
                 outterLink: "#",
-                text: "IoT Farm",
+                text: "IoT-Farm",
                 imgSrc: logo,
               }}
               toggleSidebar={toggleSidebar}

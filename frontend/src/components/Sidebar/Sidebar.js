@@ -85,7 +85,7 @@ function Sidebar(props) {
           className="simple-text logo-normal"
           onClick={props.toggleSidebar}
         >
-          {logo.text}
+          <h3>{logo.text}</h3>
         </Link>
       );
     }

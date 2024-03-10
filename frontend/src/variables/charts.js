@@ -1,3 +1,7 @@
+import React from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 let chart1_2_options = {
   maintainAspectRatio: false,
   legend: {
@@ -47,6 +51,35 @@ let chart1_2_options = {
 // #########################################
 // // // used inside src/views/Dashboard.js
 // #########################################
+let sensorData = [];
+let temperature = [];
+let mq3 = []
+let soilmoisture = [];
+let rain = [];
+
+setTimeout(async () => {
+    try {
+      const response = await axios.get("https://technothunder-unplugged1-0-hardwarehack.onrender.com/api/ideal-crop");
+    
+      console.log("Response: " + JSON.stringify(response.data));
+      if(response.status === 200)
+      {
+          sensorData = response.data;   //set the 'user' global state
+          console.log(sensorData);
+          toast.success("Past 12 records retrieved!");
+          sensorData.map((object) => temperature.push(object.Temperature));
+          sensorData.map((object) => mq3.push(object.gasData));
+          sensorData.map((object) => soilmoisture.push(object.SoilMoisture));
+          sensorData.map((object) => rain.push(object.Rain));
+          console.log(temperature, mq3, soilmoisture, rain);
+      }
+    } catch (error) {
+        const errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        console.error(errorMessage);
+        toast.error(errorMessage);
+    }
+}, 10000);
+
 let chartExample1 = {
   data1: (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -74,7 +107,7 @@ let chartExample1 = {
       ],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Temperature and Humidity",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#1f8ef1",
@@ -88,8 +121,8 @@ let chartExample1 = {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-        },
+          data: temperature
+        }
       ],
     };
   },
@@ -133,7 +166,7 @@ let chartExample1 = {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
+          data: temperature,
         },
       ],
     };
@@ -178,7 +211,7 @@ let chartExample1 = {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130],
+          data: temperature,
         },
       ],
     };
@@ -203,7 +236,7 @@ let chartExample2 = {
       labels: ["JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
       datasets: [
         {
-          label: "Data",
+          label: "Gas Data",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#1f8ef1",
@@ -217,7 +250,7 @@ let chartExample2 = {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [80, 100, 70, 80, 120, 80],
+          data: [70, 460, 300, 300, 250, 240],
         },
       ],
     };
@@ -242,7 +275,7 @@ let chartExample3 = {
       labels: ["USA", "GER", "AUS", "UK", "RO", "BR"],
       datasets: [
         {
-          label: "Countries",
+          label: "Soil Moisture",
           fill: true,
           backgroundColor: gradientStroke,
           hoverBackgroundColor: gradientStroke,
@@ -250,7 +283,7 @@ let chartExample3 = {
           borderWidth: 2,
           borderDash: [],
           borderDashOffset: 0.0,
-          data: [53, 20, 10, 80, 100, 45],
+          data: [239, 260, 262, 269, 263, 276],
         },
       ],
     };
@@ -313,11 +346,13 @@ const chartExample4 = {
     gradientStroke.addColorStop(0.4, "rgba(66,134,121,0.0)"); //green colors
     gradientStroke.addColorStop(0, "rgba(66,134,121,0)"); //green colors
 
+
+
     return {
       labels: ["JUL", "AUG", "SEP", "OCT", "NOV"],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Rainfall",
           fill: true,
           backgroundColor: gradientStroke,
           borderColor: "#00d6b4",
@@ -331,7 +366,7 @@ const chartExample4 = {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [90, 27, 60, 12, 80],
+          data: [0, 0, 0, 0 , 0],
         },
       ],
     };
@@ -384,7 +419,7 @@ const chartExample4 = {
   },
 };
 
-module.exports = {
+export {
   chartExample1, // in src/views/Dashboard.js
   chartExample2, // in src/views/Dashboard.js
   chartExample3, // in src/views/Dashboard.js

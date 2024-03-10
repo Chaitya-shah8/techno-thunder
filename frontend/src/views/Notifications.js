@@ -15,6 +15,9 @@ import {
   Col,
 } from "reactstrap";
 
+import axios from "axios";
+import { toast } from "react-toastify";
+
 function Notifications() {
   const notificationAlertRef = React.useRef(null);
   const notify = (place) => {
@@ -66,10 +69,10 @@ function Notifications() {
           <Col md="6">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Notifications Style</CardTitle>
+                <CardTitle tag="h4">ML Notifications</CardTitle>
               </CardHeader>
               <CardBody>
-                <Alert color="info">
+                {/* <Alert color="info">
                   <span>This is a plain notification</span>
                 </Alert>
                 <UncontrolledAlert color="info">
@@ -80,8 +83,29 @@ function Notifications() {
                   <span data-notify="message">
                     This is a notification with close button and icon.
                   </span>
+                </UncontrolledAlert> */}
+                <h2>Locust Data</h2>
+                <UncontrolledAlert className="alert-with-icon" color="danger">
+                  <span className="tim-icons icon-bell-55" data-notify="icon" />
+                  <span data-notify="message">
+                    This is a notification with close button and icon and have
+                    many lines. You can see that the icon and the close button
+                    are always vertically aligned. This is a beautiful
+                    notification. So you don't have to worry about the style.
+                  </span>
                 </UncontrolledAlert>
+                <h2>Fruit Quality Data</h2>
                 <UncontrolledAlert className="alert-with-icon" color="info">
+                  <span className="tim-icons icon-bell-55" data-notify="icon" />
+                  <span data-notify="message">
+                    This is a notification with close button and icon and have
+                    many lines. You can see that the icon and the close button
+                    are always vertically aligned. This is a beautiful
+                    notification. So you don't have to worry about the style.
+                  </span>
+                </UncontrolledAlert>
+                <h2>Plant Diseases Data</h2>
+                <UncontrolledAlert className="alert-with-icon" color="warning">
                   <span className="tim-icons icon-bell-55" data-notify="icon" />
                   <span data-notify="message">
                     This is a notification with close button and icon and have
@@ -96,121 +120,39 @@ function Notifications() {
           <Col md="6">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Notification states</CardTitle>
+                <CardTitle tag="h4">Notifications Index</CardTitle>
               </CardHeader>
               <CardBody>
                 <UncontrolledAlert color="primary">
                   <span>
-                    <b>Primary - </b>
-                    This is a regular notification made with ".alert-primary"
+                    <b>Primary Alert - </b>
+                    This is a primary notification
                   </span>
                 </UncontrolledAlert>
                 <UncontrolledAlert color="info">
                   <span>
-                    <b>Info - </b>
-                    This is a regular notification made with ".alert-info"
+                    <b>Info Alert - </b>
+                    This is an informational notification
                   </span>
                 </UncontrolledAlert>
                 <UncontrolledAlert color="success">
                   <span>
-                    <b>Success - </b>
-                    This is a regular notification made with ".alert-success"
+                    <b>Success Alert - </b>
+                    This is a success notification
                   </span>
                 </UncontrolledAlert>
                 <UncontrolledAlert color="warning">
                   <span>
-                    <b>Warning - </b>
-                    This is a regular notification made with ".alert-warning"
+                    <b>Warning Alert - </b>
+                    This is a caution notification
                   </span>
                 </UncontrolledAlert>
                 <UncontrolledAlert color="danger">
                   <span>
                     <b>Danger - </b>
-                    This is a regular notification made with ".alert-danger"
+                    This is a hazard notification
                   </span>
                 </UncontrolledAlert>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="12">
-            <Card>
-              <CardBody>
-                <div className="places-buttons">
-                  <Row>
-                    <Col className="ml-auto mr-auto text-center" md="6">
-                      <CardTitle tag="h4">
-                        Notifications Places
-                        <p className="category">Click to view notifications</p>
-                      </CardTitle>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="ml-auto mr-auto" lg="8">
-                      <Row>
-                        <Col md="4">
-                          <Button
-                            block
-                            color="primary"
-                            onClick={() => notify("tl")}
-                          >
-                            Top Left
-                          </Button>
-                        </Col>
-                        <Col md="4">
-                          <Button
-                            block
-                            color="primary"
-                            onClick={() => notify("tc")}
-                          >
-                            Top Center
-                          </Button>
-                        </Col>
-                        <Col md="4">
-                          <Button
-                            block
-                            color="primary"
-                            onClick={() => notify("tr")}
-                          >
-                            Top Right
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="ml-auto mr-auto" lg="8">
-                      <Row>
-                        <Col md="4">
-                          <Button
-                            block
-                            color="primary"
-                            onClick={() => notify("bl")}
-                          >
-                            Bottom Left
-                          </Button>
-                        </Col>
-                        <Col md="4">
-                          <Button
-                            block
-                            color="primary"
-                            onClick={() => notify("bc")}
-                          >
-                            Bottom Center
-                          </Button>
-                        </Col>
-                        <Col md="4">
-                          <Button
-                            block
-                            color="primary"
-                            onClick={() => notify("br")}
-                          >
-                            Bottom Right
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </div>
               </CardBody>
             </Card>
           </Col>
