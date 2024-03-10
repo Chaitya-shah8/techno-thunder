@@ -36,7 +36,7 @@ const postPlantDiseasesAndFertilizersData = asyncHandler(async (req, res) => {
     //const res = axios POST request to flask backend
 });
 
-urlp = 'https://7e42-2405-204-228-d152-4d89-2f8b-a9e6-5785.ngrok-free.app/recv'
+urlp = 'https://aeda-2409-4080-394-dcf-fd95-3e41-6f79-7bd.ngrok-free.app/crop_prediction'
 
 // @desc   send dht sensor data input to flask ML backend and get back ML output/predictions as response
 // @route   POST /api/plant-disease
@@ -44,17 +44,19 @@ urlp = 'https://7e42-2405-204-228-d152-4d89-2f8b-a9e6-5785.ngrok-free.app/recv'
 const postIdealCropData = asyncHandler(async (req, res) => {
     console.log(req.body);
     if (req.body) {
-        let data = await SensorData.create({ temperature: req.body.temperature, humidity: req.body.humidity })
-        await data.save()
-        // console.log(temperature, humidity, gas, moisture, rain);
-        // mqttClient.sendMessage(req.body.temperature);
-        let data2 = {
-            temp: req.body.temperature,
-            humid: req.body.humidity,
-            rainfall: 100
-        }
-        // const response = await axios.post(urlp, data2)
-        // res.send(response.data.prediction[0]);
+        // let data = await SensorData.create({ temperature: req.body.temperature, humidity: req.body.humidity })
+        // await data.save()
+        // // console.log(temperature, humidity, gas, moisture, rain);
+        // // mqttClient.sendMessage(req.body.temperature);
+        // let data2 = {
+        //     temp: req.body.temperature,
+        //     humid: req.body.humidity,
+        //     rainfall: 100
+        // }
+        const data3 = await SensorData.findById({ _id: '65ed5f1868814004ff21bae2' })
+        // console.group(data3)
+        const response = await axios.post(urlp, { temp: data3.temperature, humid: data3.humidity, rainfall: 100 })
+        res.send(response.data.prediction[0]);
     }
     else {
         throw new Error("Please provide all fields!");
